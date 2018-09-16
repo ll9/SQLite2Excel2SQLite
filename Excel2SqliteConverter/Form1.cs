@@ -26,7 +26,23 @@ namespace Excel2SqliteConverter
         {
             var dialog = new OpenFileDialog()
             {
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                Filter = "Excel File (*.xlsx) | *.xlsx"
+            };
+
+            var result = dialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                var dataTable = ExcelHandler.ImportExceltoDatatable(dialog.FileName);
+                Converter.CreateAndFillDb(dataTable);
+            }
+        }
+
+        private void SqliteConverterButton_Click(object sender, EventArgs e)
+        {
+            var dialog = new OpenFileDialog()
+            {
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
             };
 
             var result = dialog.ShowDialog();
