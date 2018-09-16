@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClosedXML.Excel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -48,8 +49,12 @@ namespace Excel2SqliteConverter
             var result = dialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                var dataTable = ExcelHandler.ImportExceltoDatatable(dialog.FileName);
-                Converter.CreateAndFillDb(dataTable);
+                var sqliteHanlder = new SqliteHandler(dialog.FileName, "feature");
+                var table = sqliteHanlder.GetDataTable();
+
+                XLWorkbook wb = new XLWorkbook();
+                wb.AddWorksheet(table, "1");
+                wb.SaveAs($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\dummy.xlsx");
             }
         }
     }
