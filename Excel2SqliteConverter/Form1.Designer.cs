@@ -28,13 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.excel2SqliteButton = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            // 
+            // excel2SqliteButton
+            // 
+            this.excel2SqliteButton.Location = new System.Drawing.Point(132, 111);
+            this.excel2SqliteButton.Name = "excel2SqliteButton";
+            this.excel2SqliteButton.Size = new System.Drawing.Size(140, 23);
+            this.excel2SqliteButton.TabIndex = 0;
+            this.excel2SqliteButton.Text = "Convert Excel To Sqlite";
+            this.excel2SqliteButton.UseVisualStyleBackColor = true;
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.excel2SqliteButton);
+            this.Name = "Form1";
             this.Text = "Form1";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Button excel2SqliteButton;
     }
 }
 
