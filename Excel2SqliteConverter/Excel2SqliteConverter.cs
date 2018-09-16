@@ -37,18 +37,20 @@ namespace Excel2SqliteConverter
 
         public void CreateAndFillDb(DataTable dataTable)
         {
-            CreateTable(dataTable.Columns);
+            CreateOrReplaceTable(dataTable.Columns);
             InsertToDb(dataTable);
         }
 
-        private void CreateTable(DataColumnCollection columns)
+        private void CreateOrReplaceTable(DataColumnCollection columns)
         {
             var joinedColumns = GetColumnNames(columns)
-                .Select(name => $"{name} VARCHAR(30);")
+                .Select(name => $"{name} VARCHAR(30)")
                 .Aggregate((current, next) => $"{current}, {next}");
 
 
             var query = $"CREATE TABLE {TableName} ({joinedColumns});";
+
+            ExecuteQuery($"DROP TABLE {TableName}");
             ExecuteQuery(query);
         }
 
@@ -60,7 +62,7 @@ namespace Excel2SqliteConverter
             var inserts = table
                 .Skip(1)
                 .Select(row => GetRowValues(row, colNames))
-                .Aggregate((current, next) => $"({current}), ({next})");
+                .Aggregate((current, next) => $"{current}, {next}");
 
             var query = $"INSERT INTO {TableName} VALUES {inserts};";
             ExecuteQuery(query);
@@ -68,10 +70,12 @@ namespace Excel2SqliteConverter
 
         private static string GetRowValues(DataRow row, IEnumerable<string> colNames)
         {
-            return colNames
-                .Select(name => row[name])
+            var rowValues = colNames
+                .Select(name => $"'{row[name]}'")
                 .Aggregate((current, next) => current + ", " + next)
                 .ToString();
+
+            return $"({rowValues})";
         }
 
         private void ExecuteQuery(string query)

@@ -12,6 +12,11 @@ namespace Excel2SqliteConverter
 {
     public partial class Form1 : Form
     {
+        private Excel2SqliteConverter Converter { get; } = new Excel2SqliteConverter(
+            $"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\features.db",
+            "feature"
+        );
+
         public Form1()
         {
             InitializeComponent();
@@ -28,6 +33,7 @@ namespace Excel2SqliteConverter
             if (result == DialogResult.OK)
             {
                 var dataTable = ExcelHandler.ImportExceltoDatatable(dialog.FileName);
+                Converter.CreateAndFillDb(dataTable);
             }
         }
     }
