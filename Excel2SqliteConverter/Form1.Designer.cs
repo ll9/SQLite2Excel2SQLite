@@ -39,6 +39,7 @@
             this.excel2SqliteButton.TabIndex = 0;
             this.excel2SqliteButton.Text = "Convert Excel To Sqlite";
             this.excel2SqliteButton.UseVisualStyleBackColor = true;
+            this.excel2SqliteButton.Click += new System.EventHandler(this.excel2SqliteButton_Click);
             // 
             // Form1
             // 

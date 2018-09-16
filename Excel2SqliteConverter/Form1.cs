@@ -16,5 +16,19 @@ namespace Excel2SqliteConverter
         {
             InitializeComponent();
         }
+
+        private void excel2SqliteButton_Click(object sender, EventArgs e)
+        {
+            var dialog = new OpenFileDialog()
+            {
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+            };
+
+            var result = dialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                var dataTable = ExcelHandler.ImportExceltoDatatable(dialog.FileName);
+            }
+        }
     }
 }
