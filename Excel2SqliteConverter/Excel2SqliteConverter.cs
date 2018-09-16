@@ -28,23 +28,50 @@ namespace Excel2SqliteConverter
             TableName = tableName;
         }
 
-        private void CreateTableFromDataRow(DataColumnCollection columns)
-        {
-            var joinedColumns = string.Join(
-                ", ",
-                GetColumnNames(columns)
-                    .Select(name => $"{name} VARCHAR(30);")
-            );
-
-            var query = $"CREATE TABLE {TableName} ({joinedColumns});";
-            ExecuteQuery(query);
-        }
-
         private static IEnumerable<string> GetColumnNames(DataColumnCollection columns)
         {
             return columns
                 .Cast<DataColumn>()
                 .Select(col => col.ColumnName);
+        }
+
+        public void CreateAndFillDb(DataTable dataTable)
+        {
+            CreateTable(dataTable.Columns);
+            InsertToDb(dataTable);
+        }
+
+        private void CreateTable(DataColumnCollection columns)
+        {
+            var joinedColumns = GetColumnNames(columns)
+                .Select(name => $"{name} VARCHAR(30);")
+                .Aggregate((current, next) => $"{current}, {next}");
+
+
+            var query = $"CREATE TABLE {TableName} ({joinedColumns});";
+            ExecuteQuery(query);
+        }
+
+        private void InsertToDb(DataTable dataTable)
+        {
+            var table = dataTable.AsEnumerable();
+            var colNames = GetColumnNames(dataTable.Columns).ToList();
+
+            var inserts = table
+                .Skip(1)
+                .Select(row => GetRowValues(row, colNames))
+                .Aggregate((current, next) => $"({current}), ({next})");
+
+            var query = $"INSERT INTO {TableName} VALUES {inserts};";
+            ExecuteQuery(query);
+        }
+
+        private static string GetRowValues(DataRow row, IEnumerable<string> colNames)
+        {
+            return colNames
+                .Select(name => row[name])
+                .Aggregate((current, next) => current + ", " + next)
+                .ToString();
         }
 
         private void ExecuteQuery(string query)
