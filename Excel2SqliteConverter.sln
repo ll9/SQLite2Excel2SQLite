@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2016
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Excel2SqliteConverter", "Excel2SqliteConverter\Excel2SqliteConverter.csproj", "{5DB9CB8A-D325-43CB-B8D6-1B7D74278993}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5DB9CB8A-D325-43CB-B8D6-1B7D74278993}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DB9CB8A-D325-43CB-B8D6-1B7D74278993}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DB9CB8A-D325-43CB-B8D6-1B7D74278993}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DB9CB8A-D325-43CB-B8D6-1B7D74278993}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3323A199-D91F-437A-BFA4-A065CA53F03F}
+	EndGlobalSection
+EndGlobal
